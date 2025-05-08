@@ -13,8 +13,9 @@ function showMenu() {
 2. Listar tarefas
 3. Remover tarefa
 4. Marcar como concluída
-5. Filtrar tarefas
-6. Sair
+5. Filtrar tarefas por prioridades
+6. Pesquisar tarefa
+7. Sair
 `);
 }
 
@@ -70,6 +71,19 @@ function prompt() {
                 });
                 break;
             case '6':
+                rl.question('Palavra-chave para pesquisar: ', keyword => {
+                    const filtered = taskController.filterTasks(keyword);
+                    if (filtered.length === 0) {
+                        console.log('Nenhuma tarefa encontrada com essa palavra-chave.');
+                    } else {
+                        filtered.forEach(task => {
+                            console.log(`${task.id} | ${task.completed ? '[✔]' : '[ ]'} ${task.description} (Prioridade: ${task.priority}, Criada em: ${task.createdAt})`);
+                        });
+                    }
+                    prompt();
+                });
+                break;
+            case '7':
                 rl.close();
                 break;
             default:
