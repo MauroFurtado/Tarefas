@@ -24,5 +24,5 @@ Aplicação de terminal para criação e modificação de tarefas. Feito no ambi
 2. Clone este repositório:
 
 ```sh
-   git clone https://github.com/seu-usuario/tarefas.git
+   git clone https://github.com/MauroFurtado/tarefas.git
 ```
