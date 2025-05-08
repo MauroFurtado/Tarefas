@@ -24,18 +24,20 @@ function prompt() {
         switch (answer) {
             case '1':
                 rl.question('Descrição da tarefa: ', desc => {
-                    taskController.addTask(desc);
-                    console.log('Tarefa adicionada!');
-                    prompt();
+                    rl.question('Prioridade (Alta, Média, Baixa): ', priority => {
+                        taskController.addTask(desc, priority || 'Média'); // Define prioridade padrão como "Média"
+                        console.log('Tarefa adicionada!');
+                        prompt();
+                    });
                 });
                 break;
             case '2':
-                const tasks = taskController.listTasks();
+                const tasks = taskController.listTasksByPriority();
                 if (tasks.length === 0) {
                     console.log('Nenhuma tarefa encontrada.');
                 } else {
                     tasks.forEach(task => {
-                        console.log(`${task.id} | ${task.completed ? '[✔]' : '[ ]'} ${task.description} (Criada em: ${task.createdAt})`);
+                        console.log(`${task.id} | ${task.completed ? '[✔]' : '[ ]'} ${task.description} (Prioridade: ${task.priority}, Criada em: ${task.createdAt})`);
                     });
                 }
                 prompt();
@@ -55,13 +57,13 @@ function prompt() {
                 });
                 break;
             case '5':
-                rl.question('Palavra-chave para filtrar: ', keyword => {
-                    const filtered = taskController.filterTasks(keyword);
+                rl.question('Prioridade para filtrar (Alta, Média, Baixa): ', priority => {
+                    const filtered = taskController.filterByPriority(priority);
                     if (filtered.length === 0) {
-                        console.log('Nenhuma tarefa encontrada com essa palavra.');
+                        console.log('Nenhuma tarefa encontrada com essa prioridade.');
                     } else {
                         filtered.forEach(task => {
-                            console.log(`${task.id} | ${task.completed ? '[✔]' : '[ ]'} ${task.description} (Criada em: ${task.createdAt})`);
+                            console.log(`${task.id} | ${task.completed ? '[✔]' : '[ ]'} ${task.description} (Prioridade: ${task.priority}, Criada em: ${task.createdAt})`);
                         });
                     }
                     prompt();
